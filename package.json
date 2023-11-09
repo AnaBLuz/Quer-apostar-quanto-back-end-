@@ -1,0 +1,37 @@
+{
+  "dependencies": {
+    "@prisma/client": "^5.5.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "http-status": "^1.7.3",
+    "joi": "^17.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "prisma": "^5.5.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "name": "quer-apostar-quanto-back-end-",
+  "description": "back-end de um sistema de apostas de uma casa de apostas que automatiza os seus processos para competir.  ###",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon src/server.ts",
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnaBLuz/Quer-apostar-quanto-back-end-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnaBLuz/Quer-apostar-quanto-back-end-/issues"
+  },
+  "homepage": "https://github.com/AnaBLuz/Quer-apostar-quanto-back-end-#readme"
+}
