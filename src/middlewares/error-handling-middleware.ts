@@ -8,11 +8,21 @@ type AppError = Error & {
 
 export default function handleApplicationErrors(error: Error | AppError, req: Request, res: Response, next: NextFunction) {
   if (error.name === "NotFound") {
-    return res.status(httpStatus.NOT_FOUND).send("NotFound")
+    return res.status(httpStatus.NOT_FOUND).send({
+      message: error.message,
+    })
   }
 
-  if (error.name === "Conflict") {
-    return res.status(httpStatus.CONFLICT).send("Conflict")
+  if (error.name === "DuplicateNameError") {
+    return res.status(httpStatus.CONFLICT).send({
+      message: error.message,
+    })
+  }
+
+  if(error.name === "InsufficientBalanceError"){
+    return res.status(httpStatus.BAD_REQUEST).send({
+      message: error.message,
+    })
   }
 
   console.log(error);
