@@ -1,4 +1,4 @@
-import { GameParams } from "../protocols";
+import { GameParams, GameWithBets } from "../protocols";
 import { Game } from "@prisma/client";
 import { gameRepository } from "../repositories/index";
 
@@ -16,8 +16,13 @@ async function getGameById(id: number): Promise<Game> {
     return gameRepository.getGameById(id);
 }
 
+async function getGameAndBets(id: number): Promise<GameWithBets> {
+  return gameRepository.getGameAndBets(id);
+}
+
 export const gameService = {
     postGame,
     getGames,
-    getGameById
+    getGameById,
+    getGameAndBets
 }

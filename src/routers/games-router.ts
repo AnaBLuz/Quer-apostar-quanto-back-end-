@@ -8,5 +8,6 @@ const gameRouter = Router();
 
 gameRouter.post('/games',validateSchemaMiddleware(createGameSchema), gameController.gamePost);
 gameRouter.get('/games', gameController.gameGet);
+gameRouter.get('/games/:id',gameController.getGameAndBets);
 
 export {gameRouter}

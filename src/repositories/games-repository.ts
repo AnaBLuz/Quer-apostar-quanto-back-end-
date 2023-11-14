@@ -17,9 +17,21 @@ async function getGameById(id: number){
     })
 }
 
+async function getGameAndBets(id: number){
+   return prisma.game.findUnique({
+    where:{
+        id
+    },
+    include: {
+        bets: true
+    }
+   });
+} 
+
 
 export const gameRepository = {
     createGame,
     getGames,
-    getGameById
+    getGameById,
+    getGameAndBets
 }

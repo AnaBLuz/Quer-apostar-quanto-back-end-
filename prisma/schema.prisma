@@ -28,6 +28,7 @@ model Game {
 	homeTeamScore Int @default(0)
 	awayTeamScore Int @default(0)
 	isFinished Boolean @default(false)
+	bets Bet[]
 }
 enum BetStatus {
   PENDING
@@ -46,4 +47,5 @@ model Bet {
 	participantId Int 
 	status BetStatus @default(PENDING)
 	amountWon Int?   
+	game Game @relation(fields: [gameId], references: [id])
 }
