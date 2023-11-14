@@ -29,7 +29,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/server.ts",
-    "start": "node src/server.js",
+    "start": " prisma migrate deploy && node dist/src/server.js",
     "test": "dotenv -e .env.test prisma migrate deploy & dotenv -e .env.test jest"
   },
   "repository": {
