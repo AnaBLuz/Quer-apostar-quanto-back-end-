@@ -13,7 +13,13 @@ async function gamePost(req: Request, res: Response){
 
 }
 
+async function gameGet(req:Request, res:Response){
+    const games = await gameService.getGames();
+    return res.status(httpStatus.OK).json(games);
+}
+
 
 export const gameController = {
-    gamePost
+    gamePost,
+    gameGet
 }

@@ -8,6 +8,11 @@ async function postGame({homeTeamName,awayTeamName}: GameParams): Promise<Game> 
 
 }
 
+async function getGames(): Promise<Game[]>{
+   return gameRepository.getGames();
+}
+
 export const gameService = {
-    postGame
+    postGame,
+    getGames
 }

@@ -7,8 +7,12 @@ async function createGame(data: GameParams){
         data
     });
 }
+async function getGames(){
+    return prisma.game.findMany();
+}
 
 
 export const gameRepository = {
-    createGame
+    createGame,
+    getGames
 }
