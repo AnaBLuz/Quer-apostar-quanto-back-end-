@@ -25,7 +25,12 @@ async function getParticipants(): Promise<Participant[]> {
    return allParticipants;
 }
 
+async function getParticipantById(id : number): Promise<Participant>{
+   return participantRepository.getParticipantById(id);
+}
+
 export const participantService = {
     createParticipant,
-    getParticipants
+    getParticipants,
+    getParticipantById
 }

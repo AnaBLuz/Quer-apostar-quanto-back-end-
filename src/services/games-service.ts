@@ -12,7 +12,12 @@ async function getGames(): Promise<Game[]>{
    return gameRepository.getGames();
 }
 
+async function getGameById(id: number): Promise<Game> {
+    return gameRepository.getGameById(id);
+}
+
 export const gameService = {
     postGame,
-    getGames
+    getGames,
+    getGameById
 }

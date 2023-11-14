@@ -44,6 +44,6 @@ model Bet {
 	amountBet Int 
 	gameId Int
 	participantId Int 
-	status BetStatus
-	amountWon Int?
+	status BetStatus @default(PENDING)
+	amountWon Int?   
 }
