@@ -13,7 +13,12 @@ async function createParticipant(data: ParticipantParams){
     });
 }
 
+async function getParticipants(){
+    return prisma.participant.findMany();
+}
+
 export const participantRepository = {
     getParticipantByName,
-    createParticipant
+    createParticipant,
+    getParticipants
 }

@@ -20,6 +20,12 @@ async function createParticipant({name, balance}:ParticipantParams): Promise<Par
      });
 }
 
+async function getParticipants(): Promise<Participant[]> {
+   const allParticipants = await participantRepository.getParticipants();
+   return allParticipants;
+}
+
 export const participantService = {
-    createParticipant
+    createParticipant,
+    getParticipants
 }
