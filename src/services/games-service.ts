@@ -20,9 +20,14 @@ async function getGameAndBets(id: number): Promise<GameWithBets> {
   return gameRepository.getGameAndBets(id);
 }
 
+async function updateGameToFinished(gameId, homeTeamScore, awayTeamScore){
+    return gameRepository.updateGameToFinished(gameId, homeTeamScore, awayTeamScore);
+}
+
 export const gameService = {
     postGame,
     getGames,
     getGameById,
-    getGameAndBets
+    getGameAndBets,
+    updateGameToFinished
 }
