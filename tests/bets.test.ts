@@ -1,9 +1,8 @@
 import supertest from "supertest";
 import app from "../src/app";
 import httpStatus from "http-status";
-import { faker } from '@faker-js/faker';
 import prisma from "database";
-import { insufficientBalanceError } from "errors";
+import { insufficientBalanceError, invalidBetAmountError } from "errors";
 
 const api = supertest(app);
 
@@ -27,7 +26,7 @@ describe("POST /bets", () => {
 	      participantId: 1, 
       });
       expect(response.status).toBe(httpStatus.BAD_REQUEST);
-      expect(response.body.message).toBe('Invalid bet amount!');
+      expect(response.body.message).toBe(invalidBetAmountError().message);
     })
    it('should respond with status 400 when creating a bet with a value greater than the participants current balance', async() => {
     const participant = await prisma.participant.create({
@@ -50,7 +49,8 @@ describe("POST /bets", () => {
 	      participantId: participant.id, 
     });
     expect(response.status).toBe(httpStatus.BAD_REQUEST);
-    expect(response.body.message).toBe('Insufficient balance, please increase your balance to be able to participate');
+    expect(response.body.message).toBe(insufficientBalanceError().message);
    })
+
       
 })
