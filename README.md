@@ -74,21 +74,17 @@ Para este projeto, foram utilizadas:
 
 # Como rodar em desenvolvimento
 
-1. Clone this repository
-2. Install all dependencies
+Para executar este projeto em desenvolvimento, é necessário seguir os passos abaixo:
 
-```bash
-npm i
+- Clonar o repositório;
+- Baixar as dependências necessárias com o comando: `npm install`;
+- Em seguida, criar o arquivo `.env` com base no `.env.example`;
+- Para poder executar os testes, será necessário criar um outro arquivo `.env.test` com base no `.env.example`;
+- Este arquivo `.env` é composto pelas seguintes propriedades:
 ```
-
-3. Run all migrations
-
-```bash
-npx prisma migrate dev
+  DATABASE_URL=postgresql://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}?schema=public
 ```
+- A propriedade `DATABASE_URL` é usada para fazer a conexão com o banco de dados.
 
-4. Run the back-end in a development environment:
-
-```bash
-npm run dev
-```
+- Será necessário executar o Prisma para criar o banco de dados e as tabelas necessárias. Para isso, execute o comando: `npx prisma migrate dev`;
+- Para rodar o projeto em desenvolvimento, execute o comando `npm run dev`;

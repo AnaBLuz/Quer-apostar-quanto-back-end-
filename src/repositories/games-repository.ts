@@ -31,14 +31,14 @@ async function getGameAndBets(id: number){
 async function sumAllBets(gameId: number){
     const allBets = await prisma.bet.findMany({
         where: {
-          gameId
+          gameId: gameId
         },
       });
 
 
   let sumAllBets = 0;
   for(let i =0; i < allBets.length; i++){
-    sumAllBets = sumAllBets + allBets[i][5];
+    sumAllBets = sumAllBets + allBets[i].amountBet;
   }
   return sumAllBets;
 
@@ -47,14 +47,14 @@ async function sumAllBets(gameId: number){
 async function sumAllwinnersBets(gameId: number, homeTeamScore: number, awayTeamScore: number){
     const allWinnersBets = await prisma.bet.findMany({
         where:{
-            gameId,
-            homeTeamScore,
-            awayTeamScore
+            gameId: gameId,
+            homeTeamScore: homeTeamScore,
+            awayTeamScore: awayTeamScore
         }
     });
     let sumAllWInnersBets = 0;
     for(let i =0; i < allWinnersBets.length; i++){
-        sumAllWInnersBets = sumAllWInnersBets + allWinnersBets[i][5];
+        sumAllWInnersBets = sumAllWInnersBets + allWinnersBets[i].amountBet;
       }
       return sumAllWInnersBets;
 
@@ -63,52 +63,26 @@ async function sumAllwinnersBets(gameId: number, homeTeamScore: number, awayTeam
 async function updateAllBetsAndParticipants(gameId, homeTeamScore, awayTeamScore){
     const sumAllAmountBets: Promise<number> = sumAllBets(gameId);
     const sumallAmountBetsWinners: Promise<number> = sumAllwinnersBets(gameId,homeTeamScore,awayTeamScore);
-
     const bets = await prisma.bet.findMany({
-        where:{
-            gameId
-        }
+        where:{ gameId: gameId }
     })
     for(let i =0; i < bets.length; i++){
         let newAmountWon = 0;
         if(bets[i].homeTeamScore === homeTeamScore && bets[i].awayTeamScore === awayTeamScore){
             newAmountWon = (bets[i].amountBet / await sumallAmountBetsWinners) * (await sumAllAmountBets) * (1 -0.3);
             await prisma.bet.update({
-                where:{
-                    id: bets[i].id
-                },
-                data: {
-                    status: 'WON',
-	                amountWon: newAmountWon
-                }
-            })
-        }
+                where:{ id: bets[i].id},
+                data:{ status: 'WON', amountWon: newAmountWon } }) }
        else {
-
-        await prisma.bet.update({
-            where:{
-                id: bets[i].id
-            },
-            data: {
-                status: 'LOST',
-                amountWon: newAmountWon
-            }
-        })
-
-       }
+        await prisma.bet.update({ where:{ id: bets[i].id },
+            data:{ status: 'LOST', amountWon: newAmountWon }})}
         const participant = await participantRepository.getParticipantById(bets[i].participantId);
-        const balance =  participant.balance;
-        const newBalance = balance + newAmountWon;
-        
+        let oldBalance =  participant.balance;
+        const newBalance = oldBalance + newAmountWon;
         await prisma.participant.update({
-            where:{
-                id: bets[i].participantId
-            },
-            data: {
-                balance: newBalance
-            }
+            where:{ id: bets[i].participantId},
+            data: { balance: newBalance}
         })
-
     }
 }
 
@@ -119,7 +93,7 @@ async function updateGameToFinished(id: number, homeTeamScore: number, awayTeamS
 
      return prisma.game.update({
         where:{
-            id
+            id: id
         },
         data:{
             homeTeamScore: homeTeamScore,

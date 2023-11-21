@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status'; 
 import { BetParams } from '../protocols';
 import { betService, participantService, gameService } from '../services/index';
-import { notFoundError } from '../errors/index';
+import { notFoundError, invalidBetAmountError} from '../errors/index';
 
 
 async function betPost(req:Request, res:Response){
@@ -15,6 +15,10 @@ async function betPost(req:Request, res:Response){
     if(!gameExists){
         throw notFoundError();
     }
+     if(amountBet <= 0){
+        throw invalidBetAmountError();
+     }
+
    const bet = await betService.postBet({homeTeamScore, awayTeamScore, amountBet, gameId,participantId});
 
    return res.status(httpStatus.CREATED).json(bet);

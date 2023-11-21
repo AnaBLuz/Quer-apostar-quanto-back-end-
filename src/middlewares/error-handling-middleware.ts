@@ -31,6 +31,12 @@ export default function handleApplicationErrors(error: Error | AppError, req: Re
     })
   }
 
+  if(error.name === "InvalidBetAmountError"){
+    return res.status(httpStatus.BAD_REQUEST).send({
+      message: error.message,
+    })
+  }
+
   console.log(error);
   return res.status(httpStatus.INTERNAL_SERVER_ERROR);
 }
